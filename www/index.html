@@ -37,20 +37,26 @@
                 <p class="event received">Device is Ready</p> -->
 				<form action="" id="pr-choices">					
 					<div class="form-group">
-						<label for="pr1">Option 1</label>
-						<input type="hidden" name="pr1" class="picker" data-defaultValue="#FAD3B9">
+						<div id="pr1">
+							<label for="pr1">Option 1</label>
+							<input type="hidden" name="pr1" class="picker" data-defaultValue="#FAD3B9" data-control="hue" data-opacity="1" />
+							<span class="result-rgba"></span>
+							<span class="result-rgb"></span>
+							<span class="result-rgb2"></span>
+							<span class="result-rgbdistance"></span>
+						</div>
 						
-						<label for="pr1">Option 2</label>
-						<input type="hidden" name="pr1" class="picker" data-defaultValue="#EDE4B2">
+						<!-- <label for="pr1">Option 2</label>
+						<input type="hidden" name="pr2" class="picker" data-defaultValue="#EDE4B2">
 						
 						<label for="pr1">Option 3</label>
-						<input type="hidden" name="pr1" class="picker" data-defaultValue="#BADBF5">
+						<input type="hidden" name="pr3" class="picker" data-defaultValue="#BADBF5">
 						
 						<label for="pr1">Option 4</label>
-						<input type="hidden" name="pr1" class="picker" data-defaultValue="#B59077">
+						<input type="hidden" name="pr4" class="picker" data-defaultValue="#B59077">
 						
 						<label for="pr1">Option 5</label>
-						<input type="hidden" name="pr1" class="picker" data-defaultValue="#89C78C">
+						<input type="hidden" name="pr5" class="picker" data-defaultValue="#89C78C"> -->
 					</div>
 				</form>
             </div>
@@ -75,13 +81,40 @@
 						change: function(hex, opacity) {
 							var log;
 							try {
-								log = hex ? hex : 'transparent';
-								if( opacity ) log += ', ' + opacity;
-								console.log(log);
-							} catch(e) {}
+								//log = hex ? hex : 'transparent';
+								//if( opacity ) log += ', ' + opacity;
+								//log = $(this).minicolors('rgbaString');
+								//console.log(log);
+								//if(log.length) $(this).val(text);
+							} catch(e) {
+								console.log(e, e.message);
+							}
+						},
+						hide: function(hex, opacity) {
+							var rgbas;
+							var rgbs;
+							try {
+								//log = hex ? hex : 'transparent';
+								//if( opacity ) log += ', ' + opacity;
+								rgbas = $(this).minicolors('rgbaString');
+								rgbo = $(this).minicolors('rgbObject');
+								//console.log(rgbas);
+								if(rgbas.length) $('#pr1 span.result-rgba').html(rgbas);
+								if(rgbo) {
+									t1 = RGBtoRGBA(rgbo.r, rgbo.g, rgbo.b);
+									t2 = rgba(rgbo.r, rgbo.g, rgbo.b);
+									//console.log(t);
+									$('#pr1 span.result-rgb').html('auto: ' + t1.rgba);
+									//$('#pr1 span.result-rgb2').html('auto: ' + t2.rgba);
+									$('#pr1 span.result-rgbdistance').html('distance: ' + rgbDistance([rgbo.r, rgbo.g, rgbo.b], [t1.r, t1.g, t1.b]));
+									//console.log( rgbDistance([rgbo.r, rgbo.g, rgbo.b], [t1.r, t1.g, t1.b]) );
+								}
+							} catch(e) {
+								console.log(e, e.message);
+							}
 						},
 						theme: 'default'
-					});                
+					});
 				});
 			});		
 		</script>

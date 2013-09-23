@@ -47,3 +47,49 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+function RGBtoRGBA(r, g, b){
+    if((g==void 0) && (typeof r == 'string')){
+        r = r.replace(/^\s*#|\s*$/g, '');
+        if(r.length == 3){
+            r = r.replace(/(.)/g, '$1$1');
+        }
+        g = parseInt(r.substr(2, 2), 16);
+        b = parseInt(r.substr(4, 2), 16);
+        r = parseInt(r.substr(0, 2), 16);
+    }
+
+    var min, a = ( 255 - (min = Math.min(r, g, b)) ) / 255;
+
+    return {
+        r    : r = 0|( r - min ) / a,
+        g    : g = 0|( g - min ) / a,
+        b    : b = 0|( b - min ) / a,
+        a    : a = (0|1000*a)/1000,
+        rgba : 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')'
+    };
+}
+
+function rgba(r, g, b) {
+    var a = 1 - Math.min(r, Math.min(g, b)) / 255;
+	return {
+        r    : r = 255 + (r - 255) / a,
+        g    : g = 255 + (g - 255) / a,
+        b    : b = 255 + (b - 255) / a,
+        a    : a = a,
+        rgba : 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')'
+    };
+    //return [255 + (r - 255) / a, 255 + (g - 255) / a, 255 + (b - 255) / a, a];
+}
+
+
+function rgbDistance(v1, v2) {
+	var i,
+        d = 0;
+
+    for (i = 0; i < v1.length; i++) {
+        d += (v1[i] - v2[i])*(v1[i] - v2[i]);
+    }
+    return Math.sqrt(d);	
+}
+
