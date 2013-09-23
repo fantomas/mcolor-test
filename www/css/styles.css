@@ -1,0 +1,11 @@
+div.minicolors {
+	display: block !important;
+}
+#pr-choices {
+	width: 175px;
+	padding-top: 10px;
+	margin: 0 auto;
+}
+h1 {
+	font-size: 1.5em;
+}
